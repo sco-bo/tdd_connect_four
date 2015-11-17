@@ -36,7 +36,22 @@ class Board
   end
 
   def winner
-
+    # Row wins
+    @spaces.each_with_index.any? do |a, index|
+      !a.nil? && (a == @spaces[index + 1] && a == @spaces[index + 2] && a == @spaces[index + 3]) && ((index % 7) < ((index+3) % 7))
+    end ||
+    # Column wins
+    @spaces.each_with_index.any? do |a, index|
+      !a.nil? && (a == @spaces[index - 7] && a == @spaces[index - 14] && a == @spaces[index - 21])
+    end ||
+    # Forward diagonal wins
+    @spaces.each_with_index.any? do |a, index|
+      !a.nil? && (a == @spaces[index - 6] && a == @spaces[index - 12] && a == @spaces[index - 18]) && ((index % 7) < ((index - 18) % 7))
+    end || 
+    # Reverse diagonal wins
+    @spaces.each_with_index.any? do |a, index|
+      !a.nil? && (a == @spaces[index - 8] && a == @spaces[index - 16] && a == @spaces[index - 24]) && ((index % 7) > ((index - 24) % 7))
+    end
   end
 
   def tie?
